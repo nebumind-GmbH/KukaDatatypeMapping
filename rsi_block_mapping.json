@@ -1,0 +1,1550 @@
+{
+  "ABS": {
+    "id": 48,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "ACOS": {
+    "id": 73,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "AND": {
+    "id": 8,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "AnIn": {
+    "id": 30,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "AnOut": {
+    "id": 44,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "ASIN": {
+    "id": 72,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "ATAN": {
+    "id": 74,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "ATAN2": {
+    "id": 75,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "AxisAct": {
+    "id": 32,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "A1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "A2",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "A3",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A4",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "A5",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "A6",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "AxisActExt": {
+    "id": 90,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "E1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "E2",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "E3",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "E4",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "E5",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "E6",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "AxisCorr": {
+    "id": 33,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Stat",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "A1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "A2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "A4",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "A5",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 6,
+        "name": "A6",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "AxisCorrExt": {
+    "id": 87,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Stat",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "E1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "E2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "E3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "E4",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "E5",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 6,
+        "name": "E6",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "AxisCorrMon": {
+    "id": 82,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "A1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "A2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "A3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A4",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "A5",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "A6",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 6,
+        "name": "E1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 7,
+        "name": "E2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 8,
+        "name": "E3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 9,
+        "name": "E4",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 10,
+        "name": "E5",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 11,
+        "name": "E6",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "BAND": {
+    "id": 52,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "BCOMPL": {
+    "id": 54,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "BOR": {
+    "id": 53,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "CEIL": {
+    "id": 78,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Constant": {
+    "id": 94,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "COS": {
+    "id": 70,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Cosine": {
+    "id": 96,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Signal",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "D": {
+    "id": 67,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Delay": {
+    "id": 50,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "DigIn": {
+    "id": 29,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": true,
+        "types": [
+          "Bit",
+          "Byte",
+          "UByte",
+          "Int16",
+          "UInt16",
+          "Int32",
+          "UInt32",
+          "Float"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "DigOut": {
+    "id": 43,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": true,
+        "types": [
+          "Bit",
+          "Byte",
+          "UByte",
+          "Int16",
+          "UInt16",
+          "Int32",
+          "UInt32",
+          "Float"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "Division": {
+    "id": 100,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Quotient",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Equal": {
+    "id": 7,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Ethernet": {
+    "id": 64,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "EXP": {
+    "id": 76,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "FLOOR": {
+    "id": 79,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "GearTorque": {
+    "id": 46,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "A1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 1,
+        "name": "A2",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 2,
+        "name": "A3",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 3,
+        "name": "A4",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 4,
+        "name": "A5",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 5,
+        "name": "A6",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "GearTorqueExt": {
+    "id": 89,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "E1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 1,
+        "name": "E2",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 2,
+        "name": "E3",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 3,
+        "name": "E4",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 4,
+        "name": "E5",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      },
+      {
+        "index": 5,
+        "name": "E6",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "GenCtrl": {
+    "id": 56,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Greater": {
+    "id": 6,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "I": {
+    "id": 34,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "IIRFilter": {
+    "id": 60,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Input": {
+    "id": 85,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": true,
+        "types": [
+          "Bit",
+          "Byte",
+          "UByte",
+          "Int16",
+          "UInt16",
+          "Int32",
+          "UInt32",
+          "Float"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "Less": {
+    "id": 5,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Limit": {
+    "id": 39,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "LOG": {
+    "id": 77,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "MinMax": {
+    "id": 49,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Min",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Max",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "MotorCurrent": {
+    "id": 47,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "A1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "A2",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "A3",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A4",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "A5",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "A6",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "MotorCurrentExt": {
+    "id": 88,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "E1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "E2",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "E3",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "E4",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "E5",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "E6",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "MULTI": {
+    "id": 42,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "NORM": {
+    "id": 83,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "NOT": {
+    "id": 10,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "OR": {
+    "id": 9,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "OV_PRO": {
+    "id": 63,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [
+          "Int32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "P": {
+    "id": 28,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "PD": {
+    "id": 35,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "PID": {
+    "id": 36,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "PosAct": {
+    "id": 24,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "X",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Y",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "Z",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "B",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "C",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 6,
+        "name": "S",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 7,
+        "name": "T",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "PosCorr": {
+    "id": 27,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Stat",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "X",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "Y",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "Z",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "A",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "B",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 6,
+        "name": "C",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "PosCorrMon": {
+    "id": 81,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "X",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Y",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "Z",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 3,
+        "name": "A",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 4,
+        "name": "B",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 5,
+        "name": "C",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "POW": {
+    "id": 68,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "PT1": {
+    "id": 37,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "PT2": {
+    "id": 38,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Rectangle": {
+    "id": 99,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Signal",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "ROUND": {
+    "id": 80,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "RS_FlipFlop": {
+    "id": 91,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Sawtooth": {
+    "id": 97,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Signal",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Sen_PInt": {
+    "id": 57,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [
+          "Int32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "Sen_PRea": {
+    "id": 58,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [
+          "Float32"
+        ],
+        "assumed": null
+      }
+    ]
+  },
+  "SignalSwitch": {
+    "id": 59,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Out2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "SIN": {
+    "id": 69,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Sine": {
+    "id": 95,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Signal",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "Source": {
+    "id": 45,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "SR_FlipFlop": {
+    "id": 92,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Status": {
+    "id": 62,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Stat",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "SUB": {
+    "id": 93,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Diff",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "SUM": {
+    "id": 31,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Sum",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "SumUp": {
+    "id": 101,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "TAN": {
+    "id": 71,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Timer": {
+    "id": 40,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Trafo_RobFrame": {
+    "id": 66,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Out2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "Out3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Trafo_UserFrame": {
+    "id": 65,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 1,
+        "name": "Out2",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      },
+      {
+        "index": 2,
+        "name": "Out3",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  },
+  "Triangle": {
+    "id": 98,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Signal",
+        "enum": false,
+        "types": [],
+        "assumed": "Float32"
+      }
+    ]
+  },
+  "XOR": {
+    "id": 11,
+    "outputs": [
+      {
+        "index": 0,
+        "name": "Out1",
+        "enum": false,
+        "types": [],
+        "assumed": null
+      }
+    ]
+  }
+}

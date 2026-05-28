@@ -1,0 +1,325 @@
+{
+  "ABS": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "ACOS": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "AND": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "ASIN": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "ATAN": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "ATAN2": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "AxisCorr": {
+    "datatype": "",
+    "outputs": [
+      "Stat",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6"
+    ]
+  },
+  "AxisCorrExt": {
+    "datatype": "",
+    "outputs": [
+      "Stat",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ]
+  },
+  "AxisCorrMon": {
+    "datatype": "",
+    "outputs": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ]
+  },
+  "BAND": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "BCOMPL": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "BOR": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "CEIL": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "COS": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Division": {
+    "datatype": "",
+    "outputs": [
+      "Quotient"
+    ]
+  },
+  "Equal": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Ethernet": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "EXP": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "FLOOR": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Greater": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Less": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Limit": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "LOG": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "MinMax": {
+    "datatype": "",
+    "outputs": [
+      "Min",
+      "Max"
+    ]
+  },
+  "MULTI": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "NORM": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "NOT": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "OR": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "PosAct": {
+    "datatype": "",
+    "outputs": [
+      "X",
+      "Y",
+      "Z",
+      "A",
+      "B",
+      "C",
+      "S",
+      "T"
+    ]
+  },
+  "PosCorr": {
+    "datatype": "",
+    "outputs": [
+      "Stat",
+      "X",
+      "Y",
+      "Z",
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "PosCorrMon": {
+    "datatype": "",
+    "outputs": [
+      "X",
+      "Y",
+      "Z",
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "POW": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "ROUND": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "RS_FlipFlop": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "SignalSwitch": {
+    "datatype": "",
+    "outputs": [
+      "Out1",
+      "Out2"
+    ]
+  },
+  "SIN": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "SR_FlipFlop": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Status": {
+    "datatype": "",
+    "outputs": [
+      "Stat"
+    ]
+  },
+  "SUB": {
+    "datatype": "",
+    "outputs": [
+      "Diff"
+    ]
+  },
+  "SUM": {
+    "datatype": "",
+    "outputs": [
+      "Sum"
+    ]
+  },
+  "SumUp": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "TAN": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Timer": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  },
+  "Trafo_RobFrame": {
+    "datatype": "",
+    "outputs": [
+      "Out1",
+      "Out2",
+      "Out3"
+    ]
+  },
+  "Trafo_UserFrame": {
+    "datatype": "",
+    "outputs": [
+      "Out1",
+      "Out2",
+      "Out3"
+    ]
+  },
+  "XOR": {
+    "datatype": "",
+    "outputs": [
+      "Out1"
+    ]
+  }
+}
