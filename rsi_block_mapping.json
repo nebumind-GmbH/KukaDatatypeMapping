@@ -1065,42 +1065,54 @@
         "index": 0,
         "name": "X",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
         "index": 1,
         "name": "Y",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
         "index": 2,
         "name": "Z",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
         "index": 3,
         "name": "A",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
         "index": 4,
         "name": "B",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
         "index": 5,
         "name": "C",
         "enum": false,
-        "types": [],
+        "types": [
+          "Float32"
+        ],
         "assumed": null
       },
       {
@@ -1108,14 +1120,14 @@
         "name": "S",
         "enum": false,
         "types": [],
-        "assumed": null
+        "assumed": "Int32"
       },
       {
         "index": 7,
         "name": "T",
         "enum": false,
         "types": [],
-        "assumed": null
+        "assumed": "Int32"
       }
     ]
   },

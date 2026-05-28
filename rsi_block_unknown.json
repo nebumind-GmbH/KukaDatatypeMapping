@@ -191,19 +191,6 @@
       "Out1"
     ]
   },
-  "PosAct": {
-    "datatype": "",
-    "outputs": [
-      "X",
-      "Y",
-      "Z",
-      "A",
-      "B",
-      "C",
-      "S",
-      "T"
-    ]
-  },
   "PosCorr": {
     "datatype": "",
     "outputs": [

@@ -19,9 +19,10 @@ Output (rsi_block_mapping.json), one entry per ObjType:
               fixed -> the single documented datatype, or [] when unknown
   * assumed : engineering guess used when `types` is empty (else null)
 
-Also writes rsi_block_unknown.json: a fill-in template of every object type whose
-datatype is still unknown, so you can see what is missing and extend the bibs
-below. All outputs of an object are assumed to share the same datatype.
+Also writes rsi_block_unknown.json: a fill-in template of the output channels
+whose datatype is still unknown, so you can see what is missing and extend the
+bibs below. Each output is typed independently, so an object with multiple
+output channels may carry different datatypes per channel (see PosAct).
 """
 
 import json
@@ -43,6 +44,10 @@ UNKNOWN_DATATYPE = "unknown"
 #   RSI     = "KST_RSI_50_de.pdf"                      (object -> $variable, p.131-134)
 # KRL INT = signed 32-bit -> Int32; KRL REAL = IEEE-754 single precision -> Float32
 # (the Ethernet wire TYPE widens these to LONG/DOUBLE, but the source value is as below).
+#
+# The datatype is a single string when every output shares it, or a per-channel
+# dict {output name: datatype} when an object's outputs differ (see PosAct). An
+# output not listed in the dict falls through to ASSUMED_DATATYPE_BIB / unknown.
 FIXED_DATATYPE_BIB = {
     # Value Type INT (SysVars p.84); Sen_PInt reads $SEN_PINT (RSI p.132).
     "Sen_PInt": ("Int32", "$SEN_PINT"),
@@ -63,14 +68,17 @@ FIXED_DATATYPE_BIB = {
     "AxisAct": ("Float32", "$AXIS_ACT"),
     # $AXIS_ACT external axes E1..E6, REAL (SysVars p.24); AxisActExt (RSI p.134).
     "AxisActExt": ("Float32", "$AXIS_ACT"),
+    # $POS_ACT = E6POS (SysVars p.68); PosAct outputs X,Y,Z (mm) and A,B,C (deg)
+    # are REAL. Per-channel dict because S,T differ (see ASSUMED_DATATYPE_BIB).
+    "PosAct": ({"X": "Float32", "Y": "Float32", "Z": "Float32",
+                "A": "Float32", "B": "Float32", "C": "Float32"}, "$POS_ACT"),
 }
-# Not added: PosAct -> $POS_ACT is E6POS, a MIXED struct (X,Y,Z,A,B,C = REAL but
-# S,T = INT, SysVars p.68), which breaks the "one datatype per object" assumption.
 
 # Fixed objects with no documented datatype. RSI signal-processing/generator
 # objects (KST_RSI p.135-136) output a continuous analog signal, and RSI internal
 # signals are REAL -> assume Float32. GearTorque is a real physical quantity (Nm)
 # with no matching variable in this manual ($TORQUE_AXIS_ACT is *motor* torque).
+# Like FIXED_DATATYPE_BIB, a value is a single datatype or a per-channel dict.
 ASSUMED_DATATYPE_BIB = {
     "Constant": "Float32",       # constant value (RSI p.135)
     "Cosine": "Float32",         # cosine generator (RSI p.135)
@@ -91,6 +99,8 @@ ASSUMED_DATATYPE_BIB = {
     "PT2": "Float32",            # 2nd-order lag (RSI p.136)
     "GearTorque": "Float32",     # gear torque A1..A6, Nm (RSI p.134)
     "GearTorqueExt": "Float32",  # gear torque ext axes E1..E6, Nm (RSI p.134)
+    # E6POS status/turn: INT in KRL (not in the provided manuals) -> assume Int32.
+    "PosAct": {"S": "Int32", "T": "Int32"},
 }
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -153,26 +163,43 @@ def load_blueprints(rsix_path: str) -> dict:
     return blueprints
 
 
-def _output_typing(blueprint: Blueprint) -> tuple:
+def _channel_datatype(spec, output_name: str):
     """
-    Return (is_enum, types, assumed) for a blueprint's outputs.
+    Resolve a bib datatype spec for one output channel.
+
+    `spec` is a single datatype string (applies to every output), a per-channel
+    dict {output name: datatype}, or None. Returns the datatype or None.
+    """
+    if isinstance(spec, dict):
+        return spec.get(output_name)
+    return spec
+
+
+def _output_typing(blueprint: Blueprint, output_name: str) -> tuple:
+    """
+    Return (is_enum, types, assumed) for ONE named output of a blueprint.
 
       * Enumeration  -> types = all DataType enum values,   assumed = None
       * Fixed (doc)  -> types = [documented datatype],      assumed = None
       * Fixed (guess)-> types = [] (unknown),               assumed = guess
-      * Fixed (n/a)  -> types = [] (unknown),               assumed = None
+      * Unknown      -> types = [] (unknown),               assumed = None
 
     Only a "DataType" enum types the output; other enums (Type, Source,
-    FilterType, ...) are configuration, not datatype.
+    FilterType, ...) are configuration, not datatype. Outputs are typed one at a
+    time so a multi-output object can carry different datatypes per channel.
     """
     if "DataType" in blueprint.enum_param_index_by_name:
         param_index = blueprint.enum_param_index_by_name["DataType"]
         return True, list(blueprint.enum_params[param_index]), None
 
-    if blueprint.name in FIXED_DATATYPE_BIB:
-        return False, [FIXED_DATATYPE_BIB[blueprint.name][0]], None  # documented
+    fixed = FIXED_DATATYPE_BIB.get(blueprint.name)
+    if fixed is not None:
+        documented = _channel_datatype(fixed[0], output_name)  # fixed = (spec, source)
+        if documented is not None:
+            return False, [documented], None
 
-    return False, [], ASSUMED_DATATYPE_BIB.get(blueprint.name)       # guess / n/a
+    assumed = _channel_datatype(ASSUMED_DATATYPE_BIB.get(blueprint.name), output_name)
+    return False, [], assumed
 
 
 def build_catalog(blueprint_path: str) -> dict:
@@ -180,8 +207,8 @@ def build_catalog(blueprint_path: str) -> dict:
     Return {ObjType: {"id": ObjTypeId, "outputs": [output, ...]}}, sorted by
     ObjType, for every object type that has output channels.
 
-    Each output is {"index", "name", "enum", "types", "assumed"}. All outputs of
-    an object share the same typing (agreed assumption).
+    Each output is {"index", "name", "enum", "types", "assumed"} and is typed
+    independently, so an object's channels may differ (e.g. PosAct).
     """
     blueprints = load_blueprints(blueprint_path)
 
@@ -190,17 +217,17 @@ def build_catalog(blueprint_path: str) -> dict:
         if not blueprint.outputs:
             continue  # pure sinks (Map2DigOut, Monitor, Output, ...) have none
 
-        is_enum, types, assumed = _output_typing(blueprint)
-        outputs = [
-            {
+        outputs = []
+        for idx in sorted(blueprint.outputs):
+            name = blueprint.outputs[idx]
+            is_enum, types, assumed = _output_typing(blueprint, name)
+            outputs.append({
                 "index": idx,
-                "name": blueprint.outputs[idx],
+                "name": name,
                 "enum": is_enum,
                 "types": types,
                 "assumed": assumed,
-            }
-            for idx in sorted(blueprint.outputs)
-        ]
+            })
         catalog[blueprint.name] = {"id": blueprint.element_id, "outputs": outputs}
 
     return dict(sorted(catalog.items(), key=lambda kv: kv[0].lower()))
@@ -208,24 +235,26 @@ def build_catalog(blueprint_path: str) -> dict:
 
 def build_unknown_template(catalog: dict) -> dict:
     """
-    Return a fill-in template of every object type whose fixed output datatype is
-    still unknown (i.e. not in FIXED_DATATYPE_BIB or ASSUMED_DATATYPE_BIB).
+    Return a fill-in template of the output channels whose datatype is still
+    unknown (not in FIXED_DATATYPE_BIB or ASSUMED_DATATYPE_BIB).
 
-        { ObjType: { "datatype": "", "outputs": [name, ...] } }
+        { ObjType: { "datatype": "", "outputs": [unknown output name, ...] } }
+
+    Only the unresolved channels are listed, so a partially-typed object (some
+    channels known, some not) shows just what is missing.
 
     Workflow: look up the missing ObjType, then add it to one of the bibs above
     (ASSUMED_DATATYPE_BIB: "Name": "Float32"; FIXED_DATATYPE_BIB: "Name":
-    ("Float32", "$VAR")). Re-running this script regenerates the template, so a
-    resolved type drops out automatically.
+    ("Float32", "$VAR")). For an object whose channels differ, use a per-channel
+    dict, e.g. {"X": "Float32", "S": "Int32"}. Re-running this script regenerates
+    the template, so resolved channels drop out automatically.
     """
     template = {}
     for obj_type, entry in catalog.items():
-        first = entry["outputs"][0]   # all outputs of an object share typing
-        if not first["enum"] and not first["types"] and first["assumed"] is None:
-            template[obj_type] = {
-                "datatype": "",
-                "outputs": [o["name"] for o in entry["outputs"]],
-            }
+        unknown = [o["name"] for o in entry["outputs"]
+                   if not o["enum"] and not o["types"] and o["assumed"] is None]
+        if unknown:
+            template[obj_type] = {"datatype": "", "outputs": unknown}
     return template
 
 

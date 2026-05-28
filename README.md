@@ -69,7 +69,8 @@ Looked up in the bib by `ObjType`, then by the output's `index` (= `OutIdx`):
 - **`enum: false`** → take the fixed datatype: the single documented `types`
   entry, or `assume <type>` for an engineering guess, or `unknown`.
 - **Multiple outputs** (e.g. `MotorCurrent`): `OutIdx` selects the output by its
-  `index` (`0→A1 … 5→A6`); all outputs share one datatype.
+  `index` (`0→A1 … 5→A6`). Each output is typed independently, so an object's
+  channels can carry **different** datatypes (e.g. `PosAct`).
 
 ## Datatypes: where they come from
 
@@ -90,27 +91,42 @@ The `.rsix` `<Output>` tags carry **no** datatype attribute. There are three cas
    | `AnIn` / `AnOut` | `$ANIN` / `$ANOUT` REAL (voltage) | **Float32** | SysVars p.19 / RSI p.131 |
    | `OV_PRO` | `$OV_PRO` INT (% 0..100) | **Int32** | SysVars p.65 / RSI p.134 |
    | `AxisAct` / `AxisActExt` | `$AXIS_ACT` E6AXIS, angles/pos REAL | **Float32** | SysVars p.24 / RSI p.134 |
+   | `PosAct` (X,Y,Z,A,B,C) | `$POS_ACT` E6POS, mm/deg REAL | **Float32** | SysVars p.68 / RSI p.134 |
 
-3. **Assumed fixed** (`ASSUMED_DATATYPE_BIB`) — emitted as `assume Float32`: the
+3. **Assumed fixed** (`ASSUMED_DATATYPE_BIB`) — emitted as `assume <type>`: the
    RSI signal-processing/generator objects (`Constant`, `Cosine`, `Sine`,
    `Rectangle`, `Sawtooth`, `Triangle`, `Source`, `D`, `Delay`, `GenCtrl`, `I`,
    `IIRFilter`, `P`, `PD`, `PID`, `PT1`, `PT2`; RSI p.135-136) output a continuous
-   REAL signal, plus `GearTorque`/`GearTorqueExt` (torque in Nm; RSI p.134).
+   REAL signal, plus `GearTorque`/`GearTorqueExt` (torque in Nm; RSI p.134), plus
+   `PosAct` channels `S`,`T` (E6POS status/turn — INT in KRL but not in these
+   manuals → `assume Int32`).
 
 Everything else stays **`unknown`** and is listed in `rsi_block_unknown.json`.
+
+### Per-channel datatypes
+
+An object's outputs are typed **independently**, so a bib value may be either a
+single datatype (every output) or a per-channel dict `{output name: datatype}`.
+`PosAct` is the example — its `E6POS` outputs mix REAL and INT:
+
+```python
+FIXED_DATATYPE_BIB   = { "PosAct": ({"X": "Float32", … , "C": "Float32"}, "$POS_ACT") }
+ASSUMED_DATATYPE_BIB = { "PosAct": {"S": "Int32", "T": "Int32"} }
+```
+
+A channel not covered by a dict falls through (documented → assumed → unknown),
+so the two bibs can split one object's channels between them.
 
 > KRL `REAL` is IEEE-754 **single precision** (Float32); KRL `INT` is **signed**
 > 32-bit — KRL has no unsigned/64-bit scalar. (The Ethernet wire `TYPE` widens
 > these to `LONG`/`DOUBLE`, but the source value is Int32/Float32.) Assumptions
 > are emitted as `assume <type>` so they are never mistaken for documented facts.
->
-> **Deliberately left `unknown`:** `PosAct` → `$POS_ACT` is an `E6POS` struct that
-> **mixes** types (`X,Y,Z,A,B,C` = REAL but `S,T` = INT, SysVars p.68), which
-> breaks the "one datatype per object" assumption.
 
 ## Extending the bib (the unknown template)
 
-`rsi_block_unknown.json` lists every object type still without a datatype:
+`rsi_block_unknown.json` lists the output channels still without a datatype (only
+the unresolved channels appear, so a partially-typed object shows just what's
+missing):
 
 ```json
 {
@@ -123,11 +139,12 @@ To resolve one, add it to the right bib in `rsi_block_mapping.py`:
 
 - known datatype → `FIXED_DATATYPE_BIB`: `"ABS": ("Float32", "$SOURCE"),`
 - educated guess → `ASSUMED_DATATYPE_BIB`: `"ABS": "Float32",`
+- channels differ → per-channel dict: `"Obj": ({"X": "Float32", "S": "Int32"}, "$SRC")`
 
-Re-run `python rsi_block_mapping.py`: the bib updates and the resolved type
-**drops out** of `rsi_block_unknown.json` automatically (the template is rebuilt
-from the current bibs each run). Currently 46 of 77 output-bearing types are
-still unknown.
+Re-run `python rsi_block_mapping.py`: the bib updates and the resolved channels
+**drop out** of `rsi_block_unknown.json` automatically (the template is rebuilt
+from the current bibs each run). Currently 45 of 77 output-bearing types still
+have at least one unknown channel.
 
 ## Notes / gotchas
 
@@ -156,12 +173,16 @@ still unknown.
   "MotorCurrent": { "id": 47, "outputs": [
       { "index": 0, "name": "A1", "enum": false, "types": ["Float32"], "assumed": null } ] },
   "Constant": { "id": 94, "outputs": [
-      { "index": 0, "name": "Out1", "enum": false, "types": [], "assumed": "Float32" } ] }
+      { "index": 0, "name": "Out1", "enum": false, "types": [], "assumed": "Float32" } ] },
+  "PosAct": { "id": 24, "outputs": [
+      { "index": 0, "name": "X", "enum": false, "types": ["Float32"], "assumed": null },
+      { "index": 6, "name": "S", "enum": false, "types": [], "assumed": "Int32" } ] }
 }
 ```
 
 `types` holds all enum values (enum), the single documented fixed type, or `[]`
-when unknown; `assumed` carries an engineering guess (else `null`).
+when unknown; `assumed` carries an engineering guess (else `null`). Channels of
+one object can differ — see `PosAct` above (`X` documented REAL, `S` assumed INT).
 
 **`rsi_datatype_map.json`** — the result:
 
