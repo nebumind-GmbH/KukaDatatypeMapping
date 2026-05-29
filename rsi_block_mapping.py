@@ -38,8 +38,7 @@ NS_BLUEPRINT = "RsiBlueprint"
 UNKNOWN_DATATYPE = "unknown"
 
 # Fixed output datatypes that ARE documented. Each RSI source object reads a KUKA
-# system variable; the variable's Value type fixes the datatype. ObjType ->
-# (datatype, system variable). References (page numbers are the printed pages):
+# system variable; the variable's Value type fixes the datatype. References:
 #   SysVars = "KUKA System Variables 8.1 8.2 8.3.pdf"  (object -> $variable type)
 #   RSI     = "KST_RSI_50_de.pdf"                      (object -> $variable, p.131-134)
 # KRL INT = signed 32-bit -> Int32; KRL REAL = IEEE-754 single precision -> Float32
@@ -49,59 +48,153 @@ UNKNOWN_DATATYPE = "unknown"
 # dict {output name: datatype} when an object's outputs differ (see PosAct). An
 # output not listed in the dict falls through to ASSUMED_DATATYPE_BIB / unknown.
 FIXED_DATATYPE_BIB = {
-    # Value Type INT (SysVars p.84); Sen_PInt reads $SEN_PINT (RSI p.132).
-    "Sen_PInt": ("Int32", "$SEN_PINT"),
-    # Value Type REAL (SysVars p.84); Sen_PRea reads $SEN_PREA (RSI p.132).
-    "Sen_PRea": ("Float32", "$SEN_PREA"),
-    # Current Type REAL, % of max (SysVars p.32); MotorCurrent = $CURR_ACT[1..6] (RSI p.134).
-    "MotorCurrent": ("Float32", "$CURR_ACT"),
-    # $CURR_ACT axes 7..12 = ext axes E1..E6, REAL (SysVars p.32); RSI p.134.
-    "MotorCurrentExt": ("Float32", "$CURR_ACT"),
-    # Voltage Type REAL, -1.0..+1.0 (SysVars p.19); AnIn reads $ANIN (RSI p.131).
-    "AnIn": ("Float32", "$ANIN"),
-    # Voltage Type REAL, -1.0..+1.0 (SysVars p.19); AnOut reads $ANOUT (RSI p.131).
-    "AnOut": ("Float32", "$ANOUT"),
-    # Override Type INT, % 0..100 (SysVars p.65); OV_PRO reads $OV_PRO (RSI p.134).
-    "OV_PRO": ("Int32", "$OV_PRO"),
-    # $AXIS_ACT = E6AXIS, axis angles/positions in deg/mm = REAL (SysVars p.24);
-    # AxisAct = robot axes A1..A6 (RSI p.134).
-    "AxisAct": ("Float32", "$AXIS_ACT"),
-    # $AXIS_ACT external axes E1..E6, REAL (SysVars p.24); AxisActExt (RSI p.134).
-    "AxisActExt": ("Float32", "$AXIS_ACT"),
-    # $POS_ACT = E6POS (SysVars p.68); PosAct outputs X,Y,Z (mm) and A,B,C (deg)
-    # are REAL. Per-channel dict because S,T differ (see ASSUMED_DATATYPE_BIB).
-    "PosAct": ({"X": "Float32", "Y": "Float32", "Z": "Float32",
-                "A": "Float32", "B": "Float32", "C": "Float32"}, "$POS_ACT"),
+    "Sen_PInt": "Int32",           # $SEN_PINT, Value Type INT (SysVars p.84, RSI p.132)
+    "Sen_PRea": "Float32",         # $SEN_PREA, Value Type REAL (SysVars p.84, RSI p.132)
+    "MotorCurrent": "Float32",     # $CURR_ACT[1..6], Current Type REAL % of max (SysVars p.32, RSI p.134)
+    "MotorCurrentExt": "Float32",  # $CURR_ACT[7..12] ext axes E1..E6, REAL (SysVars p.32, RSI p.134)
+    "AnIn": "Float32",             # $ANIN, Voltage Type REAL -1.0..+1.0 (SysVars p.19, RSI p.131)
+    "AnOut": "Float32",            # $ANOUT, Voltage Type REAL -1.0..+1.0 (SysVars p.19, RSI p.131)
+    "OV_PRO": "Int32",             # $OV_PRO, Override Type INT % 0..100 (SysVars p.65, RSI p.134)
+    "AxisAct": "Float32",          # $AXIS_ACT[A1..A6], E6AXIS angles/positions REAL (SysVars p.24, RSI p.134)
+    "AxisActExt": "Float32",       # $AXIS_ACT[E1..E6] ext axes, REAL (SysVars p.24, RSI p.134)
+    # $POS_ACT = E6POS (SysVars p.68); X,Y,Z in mm and A,B,C in deg are REAL.
+    # Per-channel dict because S,T differ (see ASSUMED_DATATYPE_BIB).
+    "PosAct": {"X": "Float32", "Y": "Float32", "Z": "Float32",
+               "A": "Float32", "B": "Float32", "C": "Float32"},
 }
 
-# Fixed objects with no documented datatype. RSI signal-processing/generator
-# objects (KST_RSI p.135-136) output a continuous analog signal, and RSI internal
-# signals are REAL -> assume Float32. GearTorque is a real physical quantity (Nm)
-# with no matching variable in this manual ($TORQUE_AXIS_ACT is *motor* torque).
+# Assumed datatypes organised by RSI object category (KST RSI 5.0 §12.2).
 # Like FIXED_DATATYPE_BIB, a value is a single datatype or a per-channel dict.
+# Channels not listed in a per-channel dict fall through to unknown (see below).
 ASSUMED_DATATYPE_BIB = {
-    "Constant": "Float32",       # constant value (RSI p.135)
-    "Cosine": "Float32",         # cosine generator (RSI p.135)
-    "Sine": "Float32",           # sine generator (RSI p.136)
-    "Rectangle": "Float32",      # rectangle generator (RSI p.136)
-    "Sawtooth": "Float32",       # sawtooth generator (RSI p.136)
-    "Triangle": "Float32",       # triangle generator (RSI p.136)
-    "Source": "Float32",         # signal generator (RSI p.136)
-    "D": "Float32",              # differentiator (RSI p.135)
-    "Delay": "Float32",          # signal delay (RSI p.135)
-    "GenCtrl": "Float32",        # generic filter, up to 8th order (RSI p.135)
-    "I": "Float32",              # integrator (RSI p.135)
-    "IIRFilter": "Float32",      # IIR filter (RSI p.135)
-    "P": "Float32",              # gain (RSI p.135)
-    "PD": "Float32",             # proportional-differential (RSI p.135)
-    "PID": "Float32",            # PID (RSI p.135)
-    "PT1": "Float32",            # 1st-order lag (RSI p.135)
-    "PT2": "Float32",            # 2nd-order lag (RSI p.136)
-    "GearTorque": "Float32",     # gear torque A1..A6, Nm (RSI p.134)
-    "GearTorqueExt": "Float32",  # gear torque ext axes E1..E6, Nm (RSI p.134)
+    # --- Signal processing (§12.2.9) ---
+    # Continuous analog signal objects; all inputs/outputs are KRL REAL -> Float32.
+    "Constant": "Float32",        # constant value (RSI p.135)
+    "Cosine": "Float32",          # cosine signal generator (RSI p.135)
+    "Sine": "Float32",            # sine signal generator (RSI p.136)
+    "Rectangle": "Float32",       # rectangle signal generator (RSI p.136)
+    "Sawtooth": "Float32",        # sawtooth signal generator (RSI p.136)
+    "Triangle": "Float32",        # triangle signal generator (RSI p.136)
+    "Source": "Float32",          # generic signal generator (RSI p.136)
+    "D": "Float32",               # differentiator (RSI p.135)
+    "Delay": "Float32",           # signal delay (RSI p.135)
+    "GenCtrl": "Float32",         # generic filter, up to 8th order (RSI p.135)
+    "I": "Float32",               # integrator, trapezoidal (RSI p.135)
+    "IIRFilter": "Float32",       # IIR filter (RSI p.135)
+    "P": "Float32",               # proportional gain (RSI p.135)
+    "PD": "Float32",              # proportional-differential (RSI p.135)
+    "PID": "Float32",             # PID controller (RSI p.135)
+    "PT1": "Float32",             # 1st-order lag (RSI p.135)
+    "PT2": "Float32",             # 2nd-order lag (RSI p.136)
+    # Timer fires a rising-edge pulse after the configured time (RSI p.136).
+    # A rising edge is a boolean event (0 -> 1 transition) -> Bool.
+    "Timer": "Bool",              # rising-edge pulse after elapsed time (RSI p.136)
+
+    # --- Mathematical operations (§12.2.3) ---
+    # All math objects operate on KRL REAL values -> Float32.
+    # CEIL/FLOOR return an integer-valued REAL; wire type is still REAL -> Float32.
+    "ABS": "Float32",             # absolute value / Betragfunktion (RSI p.132)
+    "ACOS": "Float32",            # arc cosine (RSI p.132)
+    "ASIN": "Float32",            # arc sine (RSI p.132)
+    "ATAN": "Float32",            # arc tangent (RSI p.133)
+    "ATAN2": "Float32",           # two-argument arc tangent; quadrant from input signs (RSI p.133)
+    "CEIL": "Float32",            # smallest integer >= input, returned as REAL (RSI p.133)
+    "COS": "Float32",             # cosine (RSI p.133)
+    "Division": "Float32",        # division; output: Quotient (RSI p.133)
+    "EXP": "Float32",             # exponential function (RSI p.133)
+    "FLOOR": "Float32",           # largest integer <= input, returned as REAL (RSI p.133)
+    "Limit": "Float32",           # clamp to [LowerLimit, UpperLimit] (RSI p.133)
+    "LOG": "Float32",             # logarithm function (RSI p.133)
+    "MinMax": "Float32",          # min and max over all inputs; outputs: Min, Max (RSI p.133)
+    "MULTI": "Float32",           # multiplication (RSI p.133)
+    "NORM": "Float32",            # Euclidean norm of up to 10 inputs (RSI p.133)
+    "POW": "Float32",             # power function (RSI p.133)
+    "ROUND": "Float32",           # round to nearest integer, returned as REAL (RSI p.133)
+    "SIN": "Float32",             # sine (RSI p.133)
+    "SUB": "Float32",             # subtraction; output: Diff (RSI p.133)
+    "SUM": "Float32",             # addition; output: Sum (RSI p.133)
+    "SumUp": "Float32",           # running accumulator (math op, not in §12.2.3 table)
+    "TAN": "Float32",             # tangent (RSI p.133)
+
+    # --- Mathematical comparisons (§12.2.4) ---
+    # Comparisons evaluate a condition and produce a boolean result -> Bool.
+    "Equal": "Bool",              # equality comparison (RSI p.133)
+    "Greater": "Bool",            # greater-than comparison (RSI p.133)
+    "Less": "Bool",               # less-than comparison (RSI p.133)
+
+    # --- Logical operations (§12.2.2) ---
+    # Boolean logic (AND/OR/NOT/XOR) operates on and produces boolean values -> Bool.
+    "AND": "Bool",                # logical AND, up to 10 inputs (RSI p.132)
+    "NOT": "Bool",                # logical NOT (RSI p.132)
+    "OR": "Bool",                 # logical OR, up to 10 inputs (RSI p.132)
+    "XOR": "Bool",                # exclusive OR, up to 10 inputs (RSI p.132)
+    # Bitwise operations work on integer bit patterns -> Int32.
+    "BAND": "Int32",              # bitwise AND with optional constant operand (RSI p.132)
+    "BCOMPL": "Int32",            # bitwise complement (RSI p.132)
+    "BOR": "Int32",               # bitwise OR with optional constant operand (RSI p.132)
+
+    # --- Flip-flops (§12.2.2) ---
+    # Flip-flop outputs a boolean state (set/reset latch) -> Bool.
+    "RS_FlipFlop": "Bool",        # RS flip-flop, reset-dominant (RSI p.132)
+    "SR_FlipFlop": "Bool",        # SR flip-flop, set-dominant (RSI p.132)
+
+    # --- Signal routing (§12.2.2) ---
+    # SignalSwitch routes one of two analog signal paths to its outputs -> Float32.
+    "SignalSwitch": "Float32",    # switch between 2 signal paths via control signal (RSI p.132)
+
+    # --- Coordinate transformation (§12.2.5) ---
+    # Transform a 3-component vector (In1..3) between reference frames -> Float32.
+    # Out1/Out2/Out3 are the transformed vector components in mm or deg.
+    "Trafo_RobFrame": "Float32",  # transform vector between robot reference frames (RSI p.134)
+    "Trafo_UserFrame": "Float32", # transform vector into user frame with offset/rotation (RSI p.134)
+
+    # --- Correction monitoring (§12.2.7) ---
+    # Outputs the current cumulative correction per axis/direction -> Float32.
+    # AxisCorrMon: Begrenzung achsspezifische Gesamtkorrektur; A1..A6 in deg, E1..E6 in mm.
+    "AxisCorrMon": "Float32",     # cumulative axis correction A1..A6 + E1..E6 (RSI p.134)
+    # PosCorrMon: Begrenzung kartesische Gesamtkorrektur; X/Y/Z in mm, A/B/C in deg.
+    "PosCorrMon": "Float32",      # cumulative Cartesian correction X/Y/Z + A/B/C (RSI p.134)
+
+    # --- Motion correction (§12.2.6) ---
+    # Correction channels carry the applied correction value -> Float32
+    # (axis corrections in deg for rotational / mm for linear axes; Cartesian in mm/deg).
+    # The Stat output datatype is not documented; see the note below this dict.
+    "AxisCorr": {"A1": "Float32", "A2": "Float32", "A3": "Float32",
+                 "A4": "Float32", "A5": "Float32", "A6": "Float32"},
+    "AxisCorrExt": {"E1": "Float32", "E2": "Float32", "E3": "Float32",
+                    "E4": "Float32", "E5": "Float32", "E6": "Float32"},
+    "PosCorr": {"X": "Float32", "Y": "Float32", "Z": "Float32",
+                "A": "Float32", "B": "Float32", "C": "Float32"},
+
+    # --- Robot data reader (§12.2.8) ---
+    "GearTorque": "Float32",      # gear torque A1..A6, Nm (RSI p.134)
+    "GearTorqueExt": "Float32",   # gear torque ext axes E1..E6, Nm (RSI p.134)
     # E6POS status/turn: INT in KRL (not in the provided manuals) -> assume Int32.
     "PosAct": {"S": "Int32", "T": "Int32"},
 }
+
+# ---- Channels with unknown datatype (not documented in KST RSI 5.0) ----
+#
+# AxisCorr / AxisCorrExt (§12.2.6 p.134): "Achsweise Korrekturaufschaltung mit
+#   Begrenzung". Applies a sensor-driven correction to robot axes A1..A6 (or
+#   external axes E1..E6). Stat output: status of the correction block; likely
+#   a limit/error flag, but could be Bool (limit exceeded) or Int32 (error code).
+#   Not documented in the RSI manual.
+#
+# PosCorr (§12.2.6 p.134): "Kartesische Korrekturaufschaltung mit Begrenzung".
+#   Applies a Cartesian sensor correction (X/Y/Z in mm, A/B/C in deg).
+#   Stat output: same uncertainty as AxisCorr.Stat above.
+#
+# Status (§12.2.8 p.134): "Liefert Statusinformationen der Robotersteuerung,
+#   z. B. aktueller Status von Submit- oder Roboter-Interpreter, aktuelle
+#   Betriebsart etc." Single Stat output; content is robot controller status
+#   information (interpreter state, operating mode, etc.). Likely Int32
+#   (integer-encoded status flags / bitmask), but the exact encoding and wire
+#   type are not described in the RSI manual.
+#
+# Ethernet (§12.2.1 p.131): UDP/XML data exchange with an external sensor
+#   system. Up to 64 outputs (Out1..Out64); types are user-defined in the XML
+#   configuration file. No static type can be assumed.
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -194,7 +287,7 @@ def _output_typing(blueprint: Blueprint, output_name: str) -> tuple:
 
     fixed = FIXED_DATATYPE_BIB.get(blueprint.name)
     if fixed is not None:
-        documented = _channel_datatype(fixed[0], output_name)  # fixed = (spec, source)
+        documented = _channel_datatype(fixed, output_name)
         if documented is not None:
             return False, [documented], None
 
@@ -244,8 +337,8 @@ def build_unknown_template(catalog: dict) -> dict:
     channels known, some not) shows just what is missing.
 
     Workflow: look up the missing ObjType, then add it to one of the bibs above
-    (ASSUMED_DATATYPE_BIB: "Name": "Float32"; FIXED_DATATYPE_BIB: "Name":
-    ("Float32", "$VAR")). For an object whose channels differ, use a per-channel
+    (ASSUMED_DATATYPE_BIB: "Name": "Float32"; FIXED_DATATYPE_BIB: "Name": "Float32").
+    For an object whose channels differ, use a per-channel
     dict, e.g. {"X": "Float32", "S": "Int32"}. Re-running this script regenerates
     the template, so resolved channels drop out automatically.
     """
