@@ -183,7 +183,10 @@ def resolve_output_datatype(output: dict, datatype_value: Optional[int]) -> str:
     if output["types"]:
         return output["types"][0]                  # documented fixed datatype
     if output["assumed"]:
-        return f"assume {output['assumed']}"        # engineering guess
+        # assumend type is not documented but is an engineering guess from rsi_block_mapping.py
+        # it is possible to mark them assumed or unkown here depending on the confidence in the guess, but for now we will return the assumed type for all cases where it is available
+        # return f"assume {output['assumed']}"
+        return output["assumed"]        # engineering guess
     return UNKNOWN_DATATYPE
 
 
@@ -260,13 +263,33 @@ def print_mapping(records: list) -> None:
             print("  ".join("-" * w for w in widths))
 
 
-def main() -> None:
-    rsi_path = os.path.join(_HERE, "nebumind_rsi.rsix")
-    conf_path = os.path.join(_HERE, "nebumind_conf.xml")
-    block_json_path = os.path.join(_HERE, "rsi_block_mapping.json")
-    out_path = os.path.join(_HERE, "rsi_datatype_map.json")
+_MAPPING_DIR = os.path.join(_HERE, "mapping")
+_TEST_CONFIG_DIR = os.path.join(_HERE, "test_config")
+_DEFAULT_BLOCK_JSON = os.path.join(_MAPPING_DIR, "rsi_block_mapping.json")
 
+
+def get_mapping(rsi_path: str, conf_path: str, block_json_path: str = _DEFAULT_BLOCK_JSON) -> dict:
+    """Return the variable-to-datatype mapping as a dict, for use in other scripts.
+
+    Args:
+        rsi_path:        Path to the .rsix blueprint file (concrete robot wiring).
+        conf_path:       Path to the _conf.xml parameter file (variable names).
+        block_json_path: Path to rsi_block_mapping.json (datatype bib). Defaults
+                         to mapping/rsi_block_mapping.json next to this file.
+
+    Returns:
+        {variable_name: datatype} dict for every SEND channel in conf_path.
+    """
     records = build_mapping(rsi_path, conf_path, block_json_path)
+    return {r["variable"]: r["datatype"] for r in records}
+
+
+def main() -> None:
+    rsi_path = os.path.join(_TEST_CONFIG_DIR, "nebumind_rsi.rsix")
+    conf_path = os.path.join(_TEST_CONFIG_DIR, "nebumind_conf.xml")
+    out_path = os.path.join(_TEST_CONFIG_DIR, "rsi_datatype_map.json")
+
+    records = build_mapping(rsi_path, conf_path, _DEFAULT_BLOCK_JSON)
     print_mapping(records)
 
     try:
